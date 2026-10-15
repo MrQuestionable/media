@@ -1,0 +1,10 @@
+out/
+build/
+.vs/
+.git/
+__pycache__/
+*.pyd
+*.so
+*.dll
+*.exe
+.env

@@ -1,0 +1,55 @@
+# =========================
+# Secrets & Credentials
+# =========================
+.env
+*.pem
+credentials.json
+
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+pip-log.txt
+
+# =========================
+# C++ / CMake / Build Outputs
+# =========================
+build/
+out/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+
+# Compiled binaries and libraries
+*.so
+*.pyd
+*.dll
+*.exe
+*.obj
+*.o
+*.a
+*.lib
+
+# =========================
+# Visual Studio / IDEs
+# =========================
+.vs/
+*.user
+*.suo
+*.sln.docstates
+.vscode/
+.idea/
+
+# =========================
+# OS Generated Files
+# =========================
+.DS_Store
+Thumbs.db

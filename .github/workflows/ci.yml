@@ -1,0 +1,44 @@
+name: CI - Build & Verify Native Engine
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-verify:
+    name: Build Multi-Stage Container & Verify C++ Bindings
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Production Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          load: true
+          tags: polyglot-media-engine:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Verify C++ pybind11 Module Linkage
+        run: |
+          docker run --rm polyglot-media-engine:ci python -c "
+          import cv2
+          import native_engine
+          print('Loaded native_engine successfully. OpenCV core and imgproc linkage verified.')
+          "
+
+      - name: Verify Python Environment Dependencies
+        run: |
+          docker run --rm polyglot-media-engine:ci python -c "
+          import fastapi, uvicorn, numpy, boto3, asyncpg
+          print('All Python application dependencies resolved cleanly.')
+          "
